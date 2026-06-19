@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: Clinic Management System API
+  description: Re-engineered MERN stack backend APIs with JWT and RBAC
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum: [admin, staff]
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid details or user already exists
+
+  /auth/login:
+    post:
+      summary: Authenticate user & obtain JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Success
+        '401':
+          description: Invalid email or password
+
+  /patients:
+    get:
+      summary: Get list of patients with search, sort, pagination
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Add a new patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - age
+                - gender
+                - phone
+              properties:
+                name:
+                  type: string
+                age:
+                  type: integer
+                gender:
+                  type: string
+                  enum: [Male, Female, Other]
+                phone:
+                  type: string
+      responses:
+        '201':
+          description: Created
+
+  /doctors:
+    get:
+      summary: Get doctors list
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create doctor
+      responses:
+        '201':
+          description: Created
+
+  /appointments:
+    get:
+      summary: Get appointments list
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Book appointment
+      responses:
+        '201':
+          description: Created
+
+  /prescriptions:
+    get:
+      summary: Get prescriptions list
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Add prescription
+      responses:
+        '201':
+          description: Created

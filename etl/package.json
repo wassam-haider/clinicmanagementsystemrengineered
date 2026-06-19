@@ -1,0 +1,14 @@
+{
+  "name": "clinic-management-etl",
+  "version": "1.0.0",
+  "description": "ETL migration pipeline for legacy flat files to MongoDB",
+  "main": "migrate.js",
+  "scripts": {
+    "migrate": "node migrate.js",
+    "import:txt": "node migrate.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.5.2"
+  }
+}
